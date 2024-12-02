@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 private const val TAG = "MealsViewModel"
 @HiltViewModel
-class MealsViewModel @Inject constructor(private val getMealsCategories: GetMealsCategories) :
+class MealsCategoriesViewModel @Inject constructor(private val getMealsCategories: GetMealsCategories) :
     BasicViewModel() {
     var categories by mutableStateOf(emptyList<Category>())
         private set
