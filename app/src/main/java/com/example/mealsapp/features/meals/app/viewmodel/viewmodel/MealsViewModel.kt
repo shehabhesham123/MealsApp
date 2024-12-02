@@ -7,28 +7,27 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.example.mealsapp.core.platform.BasicViewModel
 import com.example.mealsapp.core.usecase.Usecase
-import com.example.mealsapp.features.meals.app.viewmodel.model.Category
-import com.example.mealsapp.features.meals.domain.usecase.GetMealsCategories
+import com.example.mealsapp.features.meals.app.viewmodel.model.Meal
+import com.example.mealsapp.features.meals.domain.usecase.GetMeals
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 private const val TAG = "MealsViewModel"
 @HiltViewModel
-class MealsViewModel @Inject constructor(private val getMealsCategories: GetMealsCategories) :
-    BasicViewModel() {
-    var categories by mutableStateOf(emptyList<Category>())
+class MealsViewModel @Inject constructor(private val getMeals: GetMeals) : BasicViewModel() {
+    var meals by mutableStateOf<List<Meal>>(emptyList())
         private set
 
     fun getMeals() {
-        getMealsCategories(Usecase.None(), viewModelScope) {
-            it.fold(::handleFailure, ::handleCategories)
-        }
+        getMeals.invoke(Usecase.None(), viewModelScope, {
+            it.fold(::handleFailure, ::handleMeals)
+        })
     }
 
-    fun handleCategories(categories: List<Category>) {
-        categories.forEach {
-            Log.d(TAG, "handleCategories: ${it.strCategory}")
+    fun handleMeals(meals: List<Meal>) {
+        meals.forEach {
+            Log.d(TAG, "handleMeals: ${it.strMeal}")
         }
-        this.categories = categories
+        this.meals = meals
     }
 }
