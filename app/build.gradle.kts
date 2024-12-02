@@ -4,11 +4,17 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("androidx.room")
+    id("com.google.devtools.ksp")
 }
 
 android {
     namespace = "com.example.mealsapp"
     compileSdk = 35
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 
     defaultConfig {
         applicationId = "com.example.mealsapp"
@@ -64,6 +70,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     // navigation
     implementation(libs.androidx.navigation.compose)
+    // room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -74,7 +83,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 }
 
-
+ksp {
+    arg("option_name", "option_value")
+}
 // Allow references to generated code
 kapt {
     correctErrorTypes = true

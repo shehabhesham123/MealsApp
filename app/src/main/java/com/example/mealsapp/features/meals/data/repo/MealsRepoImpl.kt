@@ -5,6 +5,7 @@ import com.example.mealsapp.core.failure.Failure
 import com.example.mealsapp.core.funcational.Either
 import com.example.mealsapp.features.meals.app.viewmodel.model.Category
 import com.example.mealsapp.features.meals.app.viewmodel.model.Meal
+import com.example.mealsapp.features.meals.data.local.MealsDatabase
 import com.example.mealsapp.features.meals.data.remote.ApiServices
 import com.example.mealsapp.features.meals.domain.entity.MealsCategoriesResponse
 import com.example.mealsapp.features.meals.domain.entity.MealsResponse
@@ -12,7 +13,12 @@ import com.example.mealsapp.features.meals.domain.repo.MealsRepo
 import retrofit2.Call
 
 private const val TAG = "MealsRepoImpl"
-class MealsRepoImpl(private val api: ApiServices) : MealsRepo() {
+
+class MealsRepoImpl(
+    private val api: ApiServices,
+    private val database: MealsDatabase
+) :
+    MealsRepo() {
     override suspend fun getMealsCategories(): Either<Failure, List<Category>> {
         return request(
             api.getMealsCategories(),
@@ -21,8 +27,9 @@ class MealsRepoImpl(private val api: ApiServices) : MealsRepo() {
         )
     }
 
-    override suspend fun getMeals(): Either<Failure, List<Meal>> {
-        return request(api.getMeals('a'),
+    override suspend fun getMeals(letter: Char): Either<Failure, List<Meal>> {
+        return request(
+            api.getMeals(letter),
             { mealsResponse ->
                 mealsResponse.meals.map { it.toMeal() }
             }, MealsResponse(emptyList())
