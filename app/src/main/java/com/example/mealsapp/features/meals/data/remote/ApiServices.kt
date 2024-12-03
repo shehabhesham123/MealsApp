@@ -1,6 +1,6 @@
 package com.example.mealsapp.features.meals.data.remote
 
-import com.example.mealsapp.features.meals.data.repo.handler.BasicApi
+import com.example.mealsapp.features.meals.domain.repo.handler.BasicApi
 import com.example.mealsapp.features.meals.domain.entity.MealsCategoriesResponse
 import com.example.mealsapp.features.meals.domain.entity.MealsResponse
 import retrofit2.Call

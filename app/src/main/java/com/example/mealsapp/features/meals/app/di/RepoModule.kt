@@ -1,12 +1,7 @@
 package com.example.mealsapp.features.meals.app.di
 
-import com.example.mealsapp.core.usecase.Usecase
-import com.example.mealsapp.features.meals.app.viewmodel.model.Category
-import com.example.mealsapp.features.meals.data.local.MealsDatabase
-import com.example.mealsapp.features.meals.data.remote.ApiServices
 import com.example.mealsapp.features.meals.data.repo.MealsLocalHandler
 import com.example.mealsapp.features.meals.data.repo.MealsRepoImpl
-import com.example.mealsapp.features.meals.data.repo.handler.Handler
 import com.example.mealsapp.features.meals.domain.repo.MealsRepo
 import dagger.Module
 import dagger.Provides
@@ -18,10 +13,10 @@ import dagger.hilt.components.SingletonComponent
 object RepoModule {
     @Provides
     fun providesMealsRepo(
-        api: ApiServices,
-        database: MealsDatabase,
+        /*api: ApiServices,
+        database: MealsDatabase,*/
         handler: MealsLocalHandler
     ): MealsRepo {
-        return MealsRepoImpl(handler,api, database)
+        return MealsRepoImpl(handler/*,api, database*/)
     }
 }
